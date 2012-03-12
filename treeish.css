@@ -11,3 +11,11 @@ ul.treeish,
   text-align: center;
   cursor: pointer;
 }
+
+.treeish .open>.hitarea {
+  color: red;
+}
+
+.treeish .closed>.hitarea {
+  color: green;
+}

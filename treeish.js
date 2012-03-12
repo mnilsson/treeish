@@ -38,11 +38,11 @@
       Treeish.prototype._toggle = function(elm, manual) {
         if ($(elm).parent().hasClass('closed')) {
           $(elm).html("-");
-          $(elm).parent().removeClass('closed');
+          $($(elm).parent()).removeClass('closed').addClass('open');
           $('>ul', $(elm).parent()).show();
         } else if (!$(elm).parent().hasClass('closed')) {
           $(elm).html("+");
-          $(elm).parent().addClass('closed');
+          $($(elm).parent()).addClass('closed').removeClass('open');
           $('>ul', $(elm).parent()).hide();
         }
         if (this.options.persist) return this.saveToCookie();
@@ -69,7 +69,7 @@
           data = stored.split("");
           return $(this.element).find('li>ul').each(function(i, e) {
             if (parseInt(data[i]) === 1) {
-              $(e).parent().removeClass('closed').find('>span.hitarea').html("-");
+              $(e).parent().removeClass('closed').addClass('open').find('>span.hitarea').html("-");
               return $(e).show();
             }
           });
