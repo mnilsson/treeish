@@ -8,8 +8,8 @@
     <link href="treeish.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
       $(function() {
-        $('ul.tree').treeish({
-          persist: true
+          $('ul.tree').treeish({
+            persist: true
         });
       });
     </script>
@@ -24,8 +24,13 @@
       </li>
       <li>node2
         <ul>
-          <li>child1</li>
-          <li>child2
+          <li>child1
+            <ul>
+              <li>Child 3</li>
+              <li>Child 4</li>
+            </ul>
+          </li>
+          <li class="open">child2
             <ul>
               <li>Child 3</li>
               <li>Child 4</li>

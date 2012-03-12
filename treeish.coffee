@@ -31,9 +31,24 @@
       $(@element).addClass 'treeish'
       $(@element).find("li").addClass('closed').find('ul').hide()
       @addHitareas()
+
       @bindEvents()
       if @options.persist
         @loadFromCookie()
+      @_prerenderedNodes $(@element).find("li")
+
+
+    _prerenderedNodes: (nodes)->
+      s = this
+      nodes.each ->
+        if !$(this).hasClass('open')
+          $(this).addClass('closed').find('ul').hide()
+        else
+          s._openNode $(this)
+          $(this).parents('li').each ->
+            s._openNode $(this)
+            $(this).find('>ul').show()
+        s._prerenderedNodes $(this).find('li')
 
     # Bind click events to hitareas
     bindEvents: ->
@@ -44,17 +59,24 @@
 
 
     # Toggle open or closed and finally save to cookie
-    _toggle: (elm, manual) ->
+    # The element sent in is the hitarea
+    _toggle: (elm) ->
       if $(elm).parent().hasClass('closed')
-        $(elm).html("-")
-        $($(elm).parent()).removeClass('closed').addClass('open')
-        $('>ul', $(elm).parent()).show()
+        @_openNode($(elm).parent())
       else if !$(elm).parent().hasClass('closed')
-        $(elm).html("+")
-        $($(elm).parent()).addClass('closed').removeClass('open')
-        $('>ul', $(elm).parent()).hide()
+        @_closeNode($(elm).parent())
       if @options.persist
         @saveToCookie()
+
+    _openNode: (elm) ->
+      $('>.hitarea', elm).html('-')
+      $(elm).removeClass('closed').addClass('open')
+      $('>ul', elm).show()
+
+    _closeNode: (elm) ->
+      $('>.hitarea', elm).html('+')
+      $(elm).removeClass('open').addClass('closed')
+      $('>ul', elm).hide()
 
     # Add a span with the class hitarea in every li containing an ul
     addHitareas: ->
@@ -64,8 +86,9 @@
     saveToCookie: ->
       data = []
       $(@element).find('li>ul').each (i, e)->
-        data[i] = if $(e).is(":visible") then 1 else 0
+        data[i] = if $(e).parent().hasClass("open") then 1 else 0
       $.cookie(@options.cookieId, data.join(""), {})
+      console.log data
 
     # Load open nodes from cookie
     loadFromCookie: ->
