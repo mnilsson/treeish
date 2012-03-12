@@ -6,7 +6,8 @@
     defaults = {
       persist: false,
       cookieId: '_treeish',
-      cookiePath: '/'
+      cookiePath: '/',
+      hitareaLabels: true
     };
     Treeish = (function() {
 
@@ -64,19 +65,22 @@
       };
 
       Treeish.prototype._openNode = function(elm) {
-        $('>.hitarea', elm).html('-');
+        if (this.options.hitareaLabels) $('>.hitarea', elm).html('-');
         $(elm).removeClass('closed').addClass('open');
         return $('>ul', elm).show();
       };
 
       Treeish.prototype._closeNode = function(elm) {
-        $('>.hitarea', elm).html('+');
+        if (this.options.hitareaLabels) $('>.hitarea', elm).html('+');
         $(elm).removeClass('open').addClass('closed');
         return $('>ul', elm).hide();
       };
 
       Treeish.prototype.addHitareas = function() {
-        return $(this.element).find('li:has(>ul)').prepend('<span class="hitarea">+</span>');
+        var e;
+        e = $('<span class="hitarea"></span>');
+        if (this.options.hitareaLabels) e.html('+');
+        return $(this.element).find('li:has(>ul)').prepend(e);
       };
 
       Treeish.prototype.saveToCookie = function() {
@@ -99,7 +103,8 @@
           data = stored.split("");
           return $(this.element).find('li>ul').each(function(i, e) {
             if (parseInt(data[i]) === 1) {
-              $(e).parent().removeClass('closed').addClass('open').find('>span.hitarea').html("-");
+              $(e).parent().removeClass('closed').addClass('open');
+              if (s.options.hitareaLabels) $(e).find('>span.hitarea').html("-");
               return $(e).show();
             }
           });

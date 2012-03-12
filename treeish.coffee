@@ -18,7 +18,9 @@
   defaults =
     persist: false
     cookieId: '_treeish',
-    cookiePath: '/'
+    cookiePath: '/',
+    hitareaLabels: true
+
 
   class Treeish
     constructor: (@element, options) ->
@@ -70,18 +72,23 @@
         @saveToCookie()
 
     _openNode: (elm) ->
-      $('>.hitarea', elm).html('-')
+      if @options.hitareaLabels
+        $('>.hitarea', elm).html('-')
       $(elm).removeClass('closed').addClass('open')
       $('>ul', elm).show()
 
     _closeNode: (elm) ->
-      $('>.hitarea', elm).html('+')
+      if @options.hitareaLabels
+        $('>.hitarea', elm).html('+')
       $(elm).removeClass('open').addClass('closed')
       $('>ul', elm).hide()
 
     # Add a span with the class hitarea in every li containing an ul
     addHitareas: ->
-      $(@element).find('li:has(>ul)').prepend('<span class="hitarea">+</span>')
+      e = $('<span class="hitarea"></span>')
+      if @options.hitareaLabels
+        e.html('+')
+      $(@element).find('li:has(>ul)').prepend(e)
 
     # Save open node state to cookie
     saveToCookie: ->
@@ -99,7 +106,9 @@
         data = stored.split("")
         $(@element).find('li>ul').each (i, e)->
           if parseInt(data[i]) == 1
-            $(e).parent().removeClass('closed').addClass('open').find('>span.hitarea').html("-")
+            $(e).parent().removeClass('closed').addClass('open')
+            if s.options.hitareaLabels
+              $(e).find('>span.hitarea').html("-")
             $(e).show()
 
 

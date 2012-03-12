@@ -7,15 +7,16 @@ ul.treeish,
 .treeish .hitarea {
   display: inline-block;
   width: 10px;
+  height: 10px;
   margin-left: -10px;
   text-align: center;
   cursor: pointer;
 }
 
 .treeish .open>.hitarea {
-  color: red;
+  background: red;
 }
 
 .treeish .closed>.hitarea {
-  color: green;
+  background: green;
 }
