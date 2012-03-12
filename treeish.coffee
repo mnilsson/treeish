@@ -18,6 +18,7 @@
   defaults =
     persist: false
     cookieId: '_treeish',
+    cookiePath: '/'
 
   class Treeish
     constructor: (@element, options) ->
@@ -87,7 +88,7 @@
       data = []
       $(@element).find('li>ul').each (i, e)->
         data[i] = if $(e).parent().hasClass("open") then 1 else 0
-      $.cookie(@options.cookieId, data.join(""), {})
+      $.cookie(@options.cookieId, data.join(""), {path: @options.cookiePath})
       console.log data
 
     # Load open nodes from cookie
