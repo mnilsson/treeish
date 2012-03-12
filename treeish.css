@@ -1,0 +1,13 @@
+ul.treeish,
+.treeish ul{
+  list-style-type: none;
+  padding: 0 0 0 15px;
+}
+
+.treeish .hitarea {
+  display: inline-block;
+  width: 10px;
+  margin-left: -10px;
+  text-align: center;
+  cursor: pointer;
+}
