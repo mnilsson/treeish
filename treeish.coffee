@@ -1,4 +1,4 @@
-#  treeish
+# **treeish**
 #
 #  jQuery plugin for rendering foldable trees
 #
@@ -8,21 +8,22 @@
 #
 #  License: MIT <http://opensource.org/licenses/mit-license.php>
 ``
-
+#### Options
+#   - persist - If true save the state of the tree to a coocie
+#   - cookieId - Name of the cookie to persist to
+#
 (($, window, document) ->
 
   pluginName = 'treeish'
   defaults =
-    cookieId: '_treeish'
+    persist: false
+    cookieId: '_treeish',
 
   class Treeish
     constructor: (@element, options) ->
-
       @options = $.extend {}, defaults, options
-
       @_defaults = defaults
       @_name = pluginName
-
       @init()
 
     # Add class for css and close all subtrees before running initialization
@@ -31,7 +32,8 @@
       $(@element).find("li").addClass('closed').find('ul').hide()
       @addHitareas()
       @bindEvents()
-      @loadFromCookie()
+      if @options.persist
+        @loadFromCookie()
 
     # Bind click events to hitareas
     bindEvents: ->
@@ -51,7 +53,8 @@
         $(elm).html("+")
         $(elm).parent().addClass('closed')
         $('>ul', $(elm).parent()).hide()
-      @saveToCookie()
+      if @options.persist
+        @saveToCookie()
 
     # Add a span with the class hitarea in every li containing an ul
     addHitareas: ->

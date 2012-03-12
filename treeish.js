@@ -4,6 +4,7 @@
     var Treeish, defaults, pluginName;
     pluginName = 'treeish';
     defaults = {
+      persist: false,
       cookieId: '_treeish'
     };
     Treeish = (function() {
@@ -21,7 +22,7 @@
         $(this.element).find("li").addClass('closed').find('ul').hide();
         this.addHitareas();
         this.bindEvents();
-        return this.loadFromCookie();
+        if (this.options.persist) return this.loadFromCookie();
       };
 
       Treeish.prototype.bindEvents = function() {
@@ -44,7 +45,7 @@
           $(elm).parent().addClass('closed');
           $('>ul', $(elm).parent()).hide();
         }
-        return this.saveToCookie();
+        if (this.options.persist) return this.saveToCookie();
       };
 
       Treeish.prototype.addHitareas = function() {
