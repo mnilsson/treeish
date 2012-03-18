@@ -6,17 +6,19 @@ ul.treeish,
 
 .treeish .hitarea {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-left: -10px;
+  width: 16px;
+  height: 16px;
+  margin-left: -16px;
+  margin-top: -4px;
   text-align: center;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .treeish .open>.hitarea {
-  background: red;
+  background: url(minus.png) no-repeat;
 }
 
 .treeish .closed>.hitarea {
-  background: green;
+  background: url(plus.png) no-repeat;
 }
