@@ -8,8 +8,11 @@
     <link href="treeish.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
       $(function() {
+          $("#child2").addClass('open');
           $('ul.tree').treeish({
-            persist: true
+            persist: true,
+            cookiePath: '/',
+            hitareaLabels: false
         });
       });
     </script>
@@ -30,7 +33,7 @@
               <li>Child 4</li>
             </ul>
           </li>
-          <li class="open">child2
+          <li id="child2">child2
             <ul>
               <li>Child 3</li>
               <li>Child 4</li>
