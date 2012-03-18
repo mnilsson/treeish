@@ -89,10 +89,9 @@
         $(this.element).find('li>ul').each(function(i, e) {
           return data[i] = $(e).parent().hasClass("open") ? 1 : 0;
         });
-        $.cookie(this.options.cookieId, data.join(""), {
+        return $.cookie(this.options.cookieId, data.join(""), {
           path: this.options.cookiePath
         });
-        return console.log(data);
       };
 
       Treeish.prototype.loadFromCookie = function() {
